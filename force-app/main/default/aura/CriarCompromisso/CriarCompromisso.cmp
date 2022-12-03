@@ -1,0 +1,19 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+	
+    <lightning:recordEditForm objectApiName="Case">
+        <lightning:messages />
+            <div class="slds-grid">
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning:inputField fieldName="Priority"/>
+                    <lightning:inputField fieldName="Status"/>
+                    <lightning:inputField fieldName="Type"/>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning:inputField fieldName="Description"/>
+                    <lightning:inputField fieldName="Type"/>                    
+                </div>
+            </div>
+        <lightning:button class="slds-m-top_small" type="submit" label="Criar Compromisso" />
+    </lightning:recordEditForm>
+    
+</aura:component>

@@ -1,0 +1,722 @@
+sfdx commands
+ Command                               Description
+ ───────────────────────────────────── ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ alias:list                            list username aliases for the Salesforce CLI
+ alias:set                             set username aliases for the Salesforce CLI
+                                       You can associate an alias with only one username at a time. If you’ve set an alias multiple times, the alias points to the most recent username.
+ alias:unset                           unsets aliases for the Salesforce CLI
+ auth:accesstoken:store                authorize an org using an existing Salesforce access token
+                                       By default, the command runs interactively and asks you for the access token. If you previously authorized the org, the command prompts whether you want to overwrit…  
+                                       To use the command in a CI/CD script, set the SFDX_ACCESS_TOKEN environment variable to the access token. Then run the command with the --noprompt parameter. "<org …  
+ auth:device:login                     authorize an org using a device code
+                                       You must open a browser, navigate to the verification URL, and enter the code. Log in, if not already logged in, and you’ll be prompted to allow the device to conne…  
+ auth:jwt:grant                        authorize an org using the JWT flow
+                                       Use a certificate associated with your private key that has been uploaded to a personal connected app.
+                                       If you specify an --instanceurl value, this value overrides the sfdcLoginUrl value in your sfdx-project.json file. To specify a My Domain URL, use the format MyDoma…  
+ auth:list                             list auth connection information
+ auth:logout                           log out from authorized orgs
+                                       By default, this command logs you out from your default scratch org.
+ auth:sfdxurl:store                    authorize an org using an SFDX auth URL stored within a file
+                                       The SFDX auth URL must have the format "force://<clientId>:<clientSecret>:<refreshToken>@<instanceUrl>". NOTE: The SFDX auth URL uses the "force" protocol, and not …  
+
+                                       You have three options when creating the auth file. The easiest option is to redirect the output of the `sfdx force:org:display --verbose --json` command into a fil…  
+
+                                           $ sfdx force:org:display -u <OrgUsername> --verbose --json > authFile.json
+                                           $ sfdx auth:sfdxurl:store -f authFile.json
+
+                                       The resulting JSON file contains the URL in the sfdxAuthUrl property inside of a results object. NOTE: The `force:org:display --verbose` command displays the refres…  
+
+                                       You can also create a JSON file that has a top-level property named sfdxAuthUrl whose value is the auth URL. Finally, you can create a normal text file that include…  
+ auth:web:login                        authorize an org using the web login flow
+                                       If you specify an --instanceurl value, this value overrides the sfdcLoginUrl value in your sfdx-project.json file. To specify a My Domain URL, use the format MyDoma…  
+ autocomplete                          display autocomplete installation instructions
+ commands                              list all the commands
+ config:get                            get config var values for given names
+                                       Gets the Salesforce CLI configuration values for your default scratch org, your default Dev Hub org, your default instance URL, or any combination of the three. To …  
+                                       To see your default Dev Hub, include 'defaultdevhubusername'.
+                                       To see your default instance URL, include 'instanceUrl'.
+                                       To see the locations where your values are set, include the --verbose flag.
+ config:list                           lists the config variables that the Salesforce CLI uses for various commands and tasks.
+ config:set                            sets the configuration variables that the Salesforce CLI uses for various commands and tasks.
+                                        Local variables apply only to your current project. Global variables apply in any directory.
+ config:unset                          unsets the local and global configuration variables for the Salesforce CLI.
+                                        Local variables apply only to your current project. Global variables apply in any directory.
+ force:analytics:template:create       add an Analytics template to your workspace
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+
+ force:apex:class:create               create an Apex class
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+
+ force:apex:execute                    executes anonymous Apex code
+                                       Executes one or more lines of anonymous Apex code entered on the command line, or executes the code in a local file.
+                                       If you don’t run this command from within a Salesforce DX project, —-targetusername is required.
+                                       To execute your code interactively, run this command with no parameters. At the prompt, enter all your Apex code; press CTRL-D when you're finished. Your code is th…  
+                                       For more information, see "Anonymous Blocks" in the Apex Developer Guide.
+
+
+ force:apex:log:get                    fetch debug logs
+                                       Fetches the specified log or given number of most recent logs from the scratch org.
+                                       To get the IDs for your debug logs, run "sfdx force:apex:log:list".
+                                       Use the --logid parameter to return a specific log.
+                                       Use the --number parameter to return the specified number of recent logs.
+                                       Use the --outputdir parameter to specify the directory to store the logs in.
+                                       Executing this command without parameters returns the most recent log.
+ force:apex:log:list                   display a list of IDs and general information about debug logs
+                                       Run this command in a project to list the IDs and general information for all debug logs in your default org.
+                                       To fetch a specific log from your org, obtain the ID from this command's output, then run the “sfdx force:apex:log:get” command.
+ force:apex:log:tail                   Follows active log
+                                       Activates debug logging and displays logs in the terminal. You can also pipe the logs to a file.
+ force:apex:test:report                display test results for a specific asynchronous test run
+                                       Provide a test run ID to display test results for an enqueued or completed asynchronous test run. The test run ID is displayed after running the "sfdx force:apex:te…  
+ force:apex:test:run                   invoke Apex tests
+                                       Specify which tests to run by using the --classnames, --suites, or --tests parameters. Alternatively, use the --testlevel parameter to run all the tests in your org…  
+                                       To see code coverage results, use the --codecoverage parameter with --resultformat. The output displays a high-level summary of the test run and the code coverage v…  
+
+                                       NOTE: The testRunCoverage value (JSON and JUnit result formats) is a percentage of the covered lines and total lines from all the Apex classes evaluated by the test…  
+ force:apex:trigger:create             create an Apex trigger
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+
+ force:cmdt:create                     creates a new custom metadata type in the current project
+ force:cmdt:field:create               generate a custom metadata field based on the field type provided
+ force:cmdt:generate                   generates a custom metadata type and all its records for the provided sObject
+ force:cmdt:record:create              create a new record for a given custom metadata type in the current project
+ force:cmdt:record:insert              create new custom metadata type records from a CSV file
+ force:community:create                creates an Experience Cloud site using a template
+
+                                       See "Which Experience Cloud Template Should I Use?" in Salesforce Help for more information about the different template types available for Experience Cloud.
+
+                                       When creating a site with the Build Your Own (LWR) template, you must also specify the AuthenticationType value using the format templateParams.AuthenticationType=v…  
+
+                                       When you execute this command, it creates the site in preview status, which means that it isn’t yet live. After you finish building your site, you can make it live.   
+
+                                       If you have an Experience Builder site, publish the site using the sfdx force:community:publish command to make it live.
+
+                                       If you have a Salesforce Tabs + Visualforce site, activate the site to make it live by updating the status field of the Network type in the Metadata API. Alternativ…  
+
+                                       For Experience Builder sites, activating the site just sends out a welcome email to site members.
+
+                                       Examples:
+                                          $ sfdx force:community:create --name "My Customer Site" --templatename "Customer Service" --urlpathprefix customers --description "My customer site"
+                                          $ sfdx force:community:create -n partnercentral -t "Partner Central" -p partners
+                                          $ sfdx force:community:create -n lwrsite -t "Build Your Own (LWR)" -p lwrsite templateParams.AuthenticatedType=UNAUTHENTICATED
+ force:community:publish               publishes an Experience Builder site to make it live
+
+                                       When you publish an Experience Builder site for the first time, you make the site’s URL live and enable login access for site members.
+
+                                       Additionally, to send a welcome email to all site members, you must activate the site. (Activation is also required to successfully set up SEO for Experience Builde…  
+
+                                       Subsequently, each time you publish the site, you update the live site with all changes made to the site since it was last published.
+
+                                       An email notification informs you when your changes are live.
+
+                                       Example:
+                                          $ sfdx force:community:publish --name "My Customer Site"
+ force:community:template:list         retrieves the list of templates available in your org
+
+                                       See "Which Experience Cloud Template Should I Use?" in Salesforce Help for more information about the different template types available for Experience Cloud.
+
+                                       Example:
+                                          $ sfdx force:community:template:list
+ force:data:bulk:delete                bulk delete records from a csv file
+                                       The file must be a CSV file with only one column: "Id".
+                                       One job can contain many batches, depending on the length of the CSV file.
+                                       Returns a job ID and a batch ID. Use these IDs to check job status with data:bulk:status.
+
+
+ force:data:bulk:status                view the status of a bulk data load job or batch
+                                       Run this command using the job ID or batch ID returned from the force:data:bulk:delete or force:data:bulk:upsert commands.
+ force:data:bulk:upsert                bulk upsert records from a CSV file
+                                       Inserts or updates records from a CSV file.
+
+                                       One job can contain many batches, depending on the length of the CSV file.
+                                       Returns a job ID and a batch ID. Use these IDs to check job status with data:bulk:status.
+
+                                       For information about formatting your CSV file, see "Prepare CSV Files" in the Bulk API Developer Guide.
+
+                                       By default, the job runs the batches in parallel. Specify --serial to run them serially.
+ force:data:record:create              creates and inserts a record
+                                       The format of a field-value pair is <fieldName>=<value>.
+                                       Enclose all field-value pairs in one set of double quotation marks, delimited by spaces.
+                                       Enclose values that contain spaces in single quotes.
+
+                                       To get data on API performance metrics, specify both --perflog and --json.
+ force:data:record:delete              deletes a single record
+                                       Specify an sObject type and either an ID or a list of <fieldName>=<value> pairs.
+                                       The format of a field-value pair is <fieldName>=<value>.
+                                       Enclose all field-value pairs in one set of double quotation marks, delimited by spaces.
+                                       Enclose values that contain spaces in single quotes.
+
+                                       To get data on API performance metrics, specify both --perflog and --json.
+ force:data:record:get                 displays a single record
+                                       Specify an sObject type and either an ID or a list of <fieldName>=<value> pairs.
+                                       The format of a field-value pair is <fieldName>=<value>.
+                                       Enclose all field-value pairs in one set of double quotation marks, delimited by spaces.
+                                       Enclose values that contain spaces in single quotes.
+
+                                       To get data on API performance metrics, specify both --perflog and --json.
+ force:data:record:update              updates a single record
+                                       The format of a field-value pair is <fieldName>=<value>.
+                                       Enclose all field-value pairs in one set of double quotation marks, delimited by spaces.
+                                       Enclose values that contain spaces in single quotes.
+
+                                       To get data on API performance metrics, specify both --perflog and --json.
+ force:data:soql:query                 execute a SOQL query
+                                       When you execute this command in a project, it executes the query against the data in your default scratch org.
+
+                                       To get data on API performance metrics, specify both --perflog and --json.
+
+
+ force:data:tree:export                export data from an org
+                                       Exports data from an org into sObject tree format for use with the force:data:tree:import command.
+                                       The query for export can return a maximum of 2,000 records. For more information, see the REST API Developer Guide: https://developer.salesforce.com/docs/atlas.en-u…  
+ force:data:tree:import                import data into an org
+                                       IMPORTANT: Where possible, we changed noninclusive terms to align with our company value of Equality. We maintained certain terms to avoid any effect on customer im…  
+
+                                       Imports data into an org using the SObject Tree Save API.  This data can include master-detail relationships.
+                                       To generate JSON files for use with force:data:tree:import, run "sfdx force:data:tree:export".
+                                       The SObject Tree API supports requests that contain up to 200 records. For more information, see the REST API Developer Guide: https://developer.salesforce.com/docs…  
+ force:lightning:app:create            create a Lightning app
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+                                       If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directo…  
+
+ force:lightning:component:create      create a bundle for an Aura component or a Lightning web component
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+                                       If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directo…  
+
+                                       To create a Lightning web component, pass --type lwc to the command. If you don’t include a --type value, Salesforce CLI creates an Aura component by default.
+ force:lightning:event:create          create a Lightning event
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+                                       If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directo…  
+
+ force:lightning:interface:create      create a Lightning interface
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+                                       If you don’t specify an outputdir, we create a subfolder in your current working directory with the name of your bundle. For example, if the current working directo…  
+
+ force:lightning:lwc:test:create       creates a Lightning web component test file with boilerplate code inside a __tests__ directory.
+ force:lightning:lwc:test:run          invokes Lightning Web Components Jest unit tests.
+ force:lightning:lwc:test:setup        install Jest unit testing tools for Lightning Web Components.
+ force:lightning:test:create           create a Lightning test
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+
+ force:limits:api:display              display current org’s limits
+                                       When you execute this command in a project, it provides limit information for your default scratch org.
+ force:limits:recordcounts:display     display record counts for the specified standard and custom objects
+                                       Use this command to get an approximate count of the records in standard or custom objects in your org. These record counts are the same as the counts listed in the …  
+ force:mdapi:beta:convert              convert metadata from the Metadata API format into the source format
+                                       Converts metadata retrieved via Metadata API into the source format used in Salesforce DX projects.
+
+                                       To use Salesforce CLI to work with components that you retrieved via Metadata API, first convert your files from the metadata format to the source format using "sfd…  
+
+                                       To convert files from the source format back to the metadata format, so that you can deploy them using "sfdx force:mdapi:deploy", run "sfdx force:source:convert".     
+ force:mdapi:beta:deploy               deploy metadata to an org using Metadata API
+ force:mdapi:beta:deploy:report        check the status of a metadata deployment
+ force:mdapi:beta:retrieve             retrieve metadata from an org using Metadata API
+                                       Uses Metadata API to retrieve a .zip of XML files that represent metadata from the targeted org. The default target username is the admin user for the default scrat…  
+ force:mdapi:beta:retrieve:report      check the status of a metadata retrieval
+                                       Specify the job ID and a target directory for the retrieve you want to check. You can also specify a wait time (minutes) to check for updates to the retrieve status…  
+ force:mdapi:convert                   convert metadata from the Metadata API format into the source format
+
+                                       NOTE: This command must be run from within a project.
+
+                                       To use Salesforce CLI to work with components that you retrieved via Metadata API, first convert your files from the metadata format to the source format using "sfd…  
+
+                                       To convert files from the source format back to the metadata format, so that you can deploy them using "sfdx force:mdapi:deploy", run "sfdx force:source:convert".     
+
+                                       Examples:
+                                          $ sfdx force:mdapi:convert -r path/to/metadata
+                                          $ sfdx force:mdapi:convert -r path/to/metadata -d path/to/outputdir
+ force:mdapi:deploy                    deploy metadata to an org using Metadata API
+
+                                       IMPORTANT: Where possible, we changed noninclusive terms to align with our company value of Equality. We maintained certain terms to avoid any effect on customer im…  
+
+                                       Specify the location of the files to deploy as a .zip file or by the root of the directory tree containing the files. To check the status of a deployment, specify i…  
+
+                                       To wait for the command to finish running no matter how long the deployment takes, set --wait to -1: "sfdx force mdapi:deploy -w -1 ...".
+
+                                       If you don’t specify --wait, the command returns immediately and the metadata deploys asynchronously. Run force:mdapi:deploy:report to check the status of the deplo…  
+ force:mdapi:deploy:cancel             cancel a metadata deployment
+                                        Use this command to cancel a specified asynchronous metadata deployment. You can also specify a wait time (in minutes) to check for updates to the canceled deploy …  
+ force:mdapi:deploy:report             check the status of a metadata deployment
+
+                                       Specify the job ID for the deploy you want to check. You can also specify a wait time (minutes) to check for updates to the deploy status.
+ force:mdapi:describemetadata          display details about the metadata types enabled for your org
+                                       Use this information to identify the syntax needed for a <name> element in package.xml. The most recent API version is the default, or you can specify an older vers…  
+
+                                       The default target username is the admin user for the default scratch org. The username must have the Modify All Data permission or the Modify Metadata permission (…  
+ force:mdapi:listmetadata              display properties of metadata components of a specified type
+                                       This command is useful when you want to identify individual components in your manifest file or if you want a high-level view of particular components in your organ…  
+ force:mdapi:retrieve                  retrieve metadata from an org using Metadata API
+
+                                       The default target username is the admin user for the default scratch org. You can retrieve and deploy up to 10,000 files or 400 MB (39 MB compressed) at one time.    
+ force:mdapi:retrieve:report           check the status of a metadata retrieval
+
+                                       Specify the job ID and a target directory for the retrieve you want to check. You can also specify a wait time (minutes) to check for updates to the deploy status. …  
+ force:org:beta:create                 create a scratch or sandbox org
+                                       Creates a scratch org or a sandbox org using the values specified in a configuration file or key=value pairs that you specify on the command line. Values specified …  
+
+
+ force:org:clone                       clone a sandbox org
+
+                                       Specify a configuration file with a sourceSandboxName or provide key=value pairs while cloning a sandbox. The --targetusername (-u) must be a production org with sa…  
+
+                                       Examples:
+                                          $ sfdx force:org:clone -t sandbox -f config/dev-sandbox-def.json -u prodOrg -a MyDevSandbox
+                                          $ sfdx force:org:clone -t sandbox sandboxName=DevSbx1 sourceSandboxName=Sbx2Clone -u prodOrg -a MyDevSandbox
+ force:org:create                      create a scratch or sandbox org
+
+                                       Specify a configuration file or provide key=value pairs while creating a scratch org or a sandbox. When creating scratch orgs, —targetdevhubusername (-v) must be a …  
+
+                                       Examples:
+                                          $ sfdx force:org:create -f config/enterprise-scratch-def.json -a MyScratchOrg
+                                          $ sfdx force:org:create edition=Developer -a MyScratchOrg -s -v devHub
+                                          $ sfdx force:org:create -f config/enterprise-scratch-def.json -a ScratchOrgWithOverrides username=testuser1@mycompany.org
+                                          $ sfdx force:org:create -t sandbox -f config/dev-sandbox-def.json -a MyDevSandbox -u prodOrg
+ force:org:delete                      mark a scratch or sandbox org for deletion
+                                       To mark the org for deletion without being prompted to confirm, specify --noprompt.
+ force:org:display                     get the description for the current or target org
+                                       Output includes your access token, client Id, connected status, org ID, instance URL, username, and alias, if applicable.
+                                       Use --verbose to include the SFDX auth URL. WARNING: The SFDX auth URL contains sensitive information, such as a refresh token that can be used to access an org. Do…  
+                                       Including --verbose displays the sfdxAuthUrl property only if you authenticated to the org using auth:web:login (not auth:jwt:grant)
+ force:org:list                        list all orgs you’ve created or authenticated to
+ force:org:open                        open your default scratch org, or another specified org
+                                       To open a specific page, specify the portion of the URL after "https://MyDomainName.my.salesforce.com/" as --path.
+                                       For example, specify "--path lightning" to open Lightning Experience, or specify "--path /apex/YourPage" to open a Visualforce page.
+                                       To generate a URL but not launch it in your browser, specify --urlonly.
+                                       To open in a specific browser, use the --browser parameter. Supported browsers are "chrome", "edge", and "firefox". If you don't specify --browser, the org opens in…  
+ force:org:shape:create                Create a scratch org configuration (shape) based on the specified source org
+ force:org:shape:delete                delete all org shapes for a target org
+ force:org:shape:list                  list all org shapes you’ve created
+ force:org:snapshot:create             snapshot a scratch org
+
+                                       A snapshot is a point-in-time export of a scratch org. The export is stored in Salesforce and referenced by its unique name in a scratch definition file.
+
+                                       Use "sfdx force:org:snapshot:get" to get details, including status, about a snapshot creation request.
+
+                                       With "snapshot" in your scratch org definition file, use "sfdx force:org:create" to create a scratch org from a snapshot.
+
+                                       Examples:
+
+                                          $ sfdx force:org:snapshot:create --sourceorg 00Dxx0000000000 --snapshotname Dependencies --description "Contains PackageA v1.1.0"
+
+                                          $ sfdx force:org:snapshot:create -o myuser@myorg -n NightlyBranch -d "Contains PkgA v2.1.0 and PkgB 3.3.0"
+ force:org:snapshot:delete             delete a scratch org snapshot
+
+                                       Examples:
+
+                                          $ sfdx force:org:snapshot:delete --snapshot 0Oo...
+
+                                          $ sfdx force:org:snapshot:delete -s BaseSnapshot
+ force:org:snapshot:get                get details about a scratch org snapshot
+
+                                       Use "sfdx force:org:snapshot:create" to create a snapshot.
+
+                                       Use "sfdx force:org:snapshot:list" to retrieve all snapshots.
+
+                                       Examples:
+
+                                          $ sfdx force:org:snapshot:get --snapshot 0Oo...
+
+                                          $ sfdx force:org:snapshot:get -s Dependencies
+ force:org:snapshot:list               list scratch org snapshots
+
+                                       Use "sfdx force:org:snapshot:get" to get details about a snapshot request.
+
+                                       Use "sfdx force:org:snapshot:create" to create a snapshot.
+
+                                       Examples:
+
+                                          $ sfdx force:org:snapshot:list
+
+                                          $ sfdx force:org:snapshot:list -v OtherDevHub@example.com
+ force:org:status                      report sandbox org creation status and authenticate to org
+
+                                       Use this command to check the status of your sandbox org creation and, if the org is ready, authenticate to the org.
+                                       To specify the number of minutes that the command will wait for the sandbox org creation to complete before returning control of the terminal to you, include a -w |…  
+
+                                       Examples:
+                                          $ sfdx force:org:status -n YourSandboxName -w 10
+ force:package1:version:create         create a first-generation package version in the release org
+
+                                       NOTE: This command must be run from within a project.
+
+                                       The package version is based on the contents of the specified metadata package. Omit -m if you want to create an unmanaged package version.
+ force:package1:version:create:get     retrieve the status of a package version creation request
+
+                                       Examples:
+                                          $ sfdx force:package:version:create:report -i 08c...
+                                          $ sfdx force:package:version:create:report -i 08c... -v devhub@example.com
+ force:package1:version:display        display details about a first-generation package version
+
+                                       NOTE: This command must be run from within a project.
+
+                                       Display detailed information about an individual package version, including metadata package ID, name, the release state, and build number.
+ force:package1:version:list           list package versions for the specified first-generation package or for the org
+
+                                       NOTE: This command must be run from within a project.
+
+                                       If a metadata package ID is specified, lists all versions of the specified package. Otherwise, lists all package versions for the org. For each package version, the…  
+ force:package:create                  create a package
+
+                                       NOTE: This command must be run from within a project.
+
+                                       First, use this command to create a package. Then create a package version.
+
+                                       If you don’t have a namespace defined in your sfdx-project.json file, use --nonamespace.
+
+                                       Your --name value must be unique within your namespace.
+
+                                       Examples:
+                                          $ sfdx force:package:create -n YourPackageName -t Unlocked -r force-app
+                                          $ sfdx force:package:create -n YourPackageName -d "Your Package Descripton" -t Unlocked -r force-app
+
+                                       Run 'sfdx force:package:list' to list all packages in the Dev Hub org.
+ force:package:delete                  delete a package
+
+                                       NOTE: This command must be run from within a project.
+
+                                       Specify the ID or alias of the package you want to delete.
+
+                                       Examples:
+                                          $ sfdx force:package:delete -p "Your Package Alias"
+                                          $ sfdx force:package:delete -p 0Ho...
+ force:package:install                 install a package in the target org
+
+                                       Supply the ID of the package version to install. The package installs in your default target org unless you supply the username for a different target org.
+
+                                       For package upgrades, to specify options for component deprecation or deletion of removed components, include an --upgradetype value. To delete components that can …  
+
+                                       Examples:
+                                          $ sfdx force:package:install --package 04t... -u me@example.com
+                                          $ sfdx force:package:install --package awesome_package_alias
+                                          $ sfdx force:package:install --package "Awesome Package Alias"
+                                          $ sfdx force:package:install --package 04t... -t DeprecateOnly
+ force:package:install:report          retrieve the status of a package installation request
+
+                                       Examples:
+                                          $ sfdx force:package:install:report -i 0Hf...
+                                          $ sfdx force:package:install:report -i 0Hf... -u me@example.com
+ force:package:installed:list          list the org’s installed packages
+
+                                       NOTE: This command must be run from within a project.
+
+                                       Examples:
+                                          $ sfdx force:package:installed:list
+                                          $ sfdx force:package:installed:list -u me@example.com
+ force:package:list                    list all packages in the Dev Hub org
+
+                                       You can view the namespace, IDs, and other details for each package.
+
+                                       Examples:
+                                          $ sfdx force:package:list -v devhub@example.com
+                                          $ sfdx force:package:list -v devhub@example.com --verbose
+ force:package:uninstall               uninstall a second-generation package from the target org
+
+                                       Specify the package ID for a second-generation package.
+
+                                       Examples:
+                                          $ sfdx force:package:uninstall -p 04t... -u me@example.com
+                                          $ sfdx force:package:uninstall -p undesirable_package_alias
+                                          $ sfdx force:package:uninstall -p "Undesirable Package Alias"
+
+                                       To list the org’s installed packages, run "sfdx force:package:installed:list".
+
+                                       To uninstall a first-generation package, from Setup, enter Installed Packages in the Quick Find box, then select Installed Packages.
+ force:package:uninstall:report        retrieve status of package uninstall request
+
+                                       Examples:
+                                          $ sfdx force:package:uninstall:report -i 06y...
+                                          $ sfdx force:package:uninstall:report -i 06y... -u me@example.com
+ force:package:update                  update package details
+
+                                       NOTE: This command must be run from within a project.
+
+                                       Specify a new value for each option you want to update.
+
+                                       Examples:
+                                          $ sfdx force:package:update -p "Your Package Alias" -n "New Package Name"
+                                          $ sfdx force:package:update -p 0Ho... -d "New Package Description"
+
+                                       Run "sfdx force:package:list" to list all packages in the Dev Hub org.
+ force:package:version:create          create a package version
+
+                                       NOTE: This command must be run from within a project.
+
+                                       The package version is based on the package contents in the specified directory.
+
+                                       To retrieve details about a package version create request, including status and package version ID (04t), run "sfdx force:package:version:create:report -i 08c...".   
+
+                                       We recommend that you specify the --installationkey parameter to protect the contents of your package and to prevent unauthorized installation of your package.        
+
+                                       To list package version creation requests in the org, run "sfdx force:package:version:create:list".
+
+                                       To promote a package version to released, you must use the --codecoverage parameter. The package must also meet the code coverage requirements. This requirement app…  
+
+                                       We don’t calculate code coverage for org-dependent unlocked packages, or for package versions that specify --skipvalidation.
+
+                                       Examples:
+                                          $ sfdx force:package:version:create -d common -k password123
+                                          $ sfdx force:package:version:create -p "Your Package Alias" -k password123
+                                          $ sfdx force:package:version:create -p 0Ho... -k password123
+                                          $ sfdx force:package:version:create -d common -k password123 --skipvalidation
+ force:package:version:create:list     list package version creation requests
+
+                                       Shows the details of each request to create a package version in the Dev Hub org.
+
+                                       All filter parameters are applied using the AND logical operator (not OR).
+
+                                       To get information about a specific request, run "sfdx force:package:version:create:report" and supply the request ID.
+
+                                       Examples:
+                                          $ sfdx force:package:version:create:list
+                                          $ sfdx force:package:version:create:list --createdlastdays 3
+                                          $ sfdx force:package:version:create:list --status Error
+                                          $ sfdx force:package:version:create:list -s InProgress
+                                          $ sfdx force:package:version:create:list -c 3 -s Success
+ force:package:version:create:report   retrieve details about a package version creation request
+
+                                       Specify the request ID for which you want to view details. If applicable, the command displays errors related to the request.
+
+                                       Examples:
+                                          $ sfdx force:package:version:create:report -i 08c...
+                                          $ sfdx force:package:version:create:report -i 08c... -v devhub@example.com
+
+                                       To show all requests in the org, run "sfdx force:package:version:create:list".
+ force:package:version:delete          delete a package version
+
+                                       NOTE: This command must be run from within a project.
+
+                                       Specify the ID or alias of the package version you want to delete.
+
+                                       Examples:
+                                          $ sfdx force:package:version:delete -p "Your Package Alias"
+                                          $ sfdx force:package:version:delete -p 04t...
+ force:package:version:displayancestry display the ancestry tree for a 2GP managed package version
+ force:package:version:list            list all package versions in the Dev Hub org
+
+                                       Displays details of each package version in the org.
+
+                                       Use --concise or --verbose to display limited or additional details, respectively.
+
+                                       All filter parameters are applied using the AND logical operator (not OR).
+
+                                       Examples:
+                                          $ sfdx force:package:version:list --verbose --createdlastdays 3 --released --orderby PatchVersion
+                                          $ sfdx force:package:version:list --packages 0Ho000000000000,0Ho000000000001 --released --modifiedlastdays 0
+                                          $ sfdx force:package:version:list --released
+                                          $ sfdx force:package:version:list --concise --modifiedlastdays 0
+                                          $ sfdx force:package:version:list --concise -c 3 -r
+                                          $ sfdx force:package:version:list --packages exp-mgr,exp-mgr-util --released --modifiedlastdays 0
+ force:package:version:promote         promote a package version to released
+
+                                       NOTE: This command must be run from within a project.
+
+                                       Supply the ID or alias of the package version you want to promote. Promotes the package version to released status.
+
+                                       Examples:
+                                          $ sfdx force:package:version:promote -p 04t...
+                                          $ sfdx force:package:version:promote -p awesome_package_alias
+                                          $ sfdx force:package:version:promote -p "Awesome Package Alias"
+ force:package:version:report          retrieve details about a package version in the Dev Hub org
+
+                                       NOTE: This command must be run from within a project.
+
+                                       Examples:
+                                          $ sfdx force:package:version:report -p 04t...
+                                          $ sfdx force:package:version:report -p "Your Package Alias"
+
+                                       To update package version values, run "sfdx force:package:version:update".
+ force:package:version:update          update a package version
+
+                                       NOTE: This command must be run from within a project.
+
+                                       Specify a new value for each option you want to update.
+
+                                       Examples:
+                                          $ sfdx force:package:version:update -p "Your Package Alias" -k password123
+                                          $ sfdx force:package:version:update -p 04t... -b main -t 'Release 1.0.7'
+                                          $ sfdx force:package:version:update -p 04t... -e "New Package Version Description"
+
+                                       To display details about a package version, run "sfdx force:package:version:report".
+ force:project:create                  create a Salesforce DX project
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+
+ force:schema:sobject:describe         displays the metadata for a standard or custom object
+ force:schema:sobject:list             list all objects of a specified category
+ force:source:beta:pull                pull source from the scratch org to the project
+ force:source:beta:push                push source to a scratch org from the project
+ force:source:beta:status              list local changes and/or changes in a scratch org
+ force:source:beta:tracking:clear      clear all local source tracking information
+
+                                       WARNING: This command deletes or overwrites all existing source tracking files. Use with extreme caution.
+
+                                       Clears all local source tracking information. When you next run force:source:beta:status, the CLI displays all local and remote files as changed, and any files with…  
+ force:source:beta:tracking:reset      reset local and remote source tracking
+
+                                        WARNING: This command deletes or overwrites all existing source tracking files. Use with extreme caution.
+
+                                       Resets local and remote source tracking so that the CLI no longer registers differences between your local files and those in the org. When you next run force:sourc…  
+
+                                       Use the --revision parameter to reset source tracking to a specific revision number of an org source member. To get the revision number, query the SourceMember Tool…  
+                                        $ sfdx force:data:soql:query -q "SELECT MemberName, MemberType, RevisionCounter FROM SourceMember" -t
+ force:source:convert                  convert source into Metadata API format
+                                        Converts source-formatted files into metadata that you can deploy using Metadata API.
+                                       To convert source-formatted files into the metadata format, so that you can deploy them using Metadata API,
+                                       run "sfdx force:source:convert". Then deploy the metadata using "sfdx force:mdapi:deploy".
+
+                                       To convert Metadata API–formatted files into the source format, run "sfdx force:mdapi:convert".
+
+                                       To specify a package name that includes spaces, enclose the name in single quotes.
+ force:source:delete                   delete source from your project and from a non-source-tracked org
+                                       IMPORTANT: Where possible, we changed noninclusive terms to align with our company value of Equality. We maintained certain terms to avoid any effect on customer im…  
+
+                                       Use this command to delete components from orgs that don’t have source tracking.
+                                       To remove deleted items from scratch orgs, which have change tracking, use "sfdx force:source:push".
+ force:source:deploy                   deploy source to an org
+                                       IMPORTANT: Where possible, we changed noninclusive terms to align with our company value of Equality. We maintained certain terms to avoid any effect on customer im…  
+
+                                       Use this command to deploy source (metadata that’s in source format) to an org.
+                                       To take advantage of change tracking with scratch orgs, use "sfdx force:source:push".
+                                       To deploy metadata that’s in metadata format, use "sfdx force:mdapi:deploy".
+
+                                       The source you deploy overwrites the corresponding metadata in your org. This command does not attempt to merge your source with the versions in your org.
+
+                                       To run the command asynchronously, set --wait to 0, which immediately returns the job ID. This way, you can continue to use the CLI.
+                                       To check the status of the job, use force:source:deploy:report.
+
+                                       If the comma-separated list you’re supplying contains spaces, enclose the entire comma-separated list in one set of double quotes. On Windows, if the list contains …  
+                                        If you use the --manifest, --predestructivechanges, or --postdestructivechanges parameters, run the force:source:manifest:create command to easily generate the dif…  
+ force:source:deploy:cancel            cancel a source deployment
+                                        Use this command to cancel a specified asynchronous source deployment. You can also specify a wait time (in minutes) to check for updates to the canceled deploy st…  
+
+                                       To run the command asynchronously, set --wait to 0, which immediately returns the job ID. This way, you can continue to use the CLI.
+                                       To check the status of the job, use force:source:deploy:report.
+ force:source:deploy:report            check the status of a metadata deployment
+                                       Specify the job ID for the deploy you want to check. You can also specify a wait time (minutes) to check for updates to the deploy status.
+ force:source:ignored:list             check your local project package directories for forceignored files
+ force:source:manifest:create          create a project manifest that lists the metadata components you want to deploy or retrieve
+                                        Create a manifest from a list of metadata components (--metadata) or from one or more local directories that contain source files (--sourcepath). You can specify e…  
+
+                                       Use --manifesttype to specify the type of manifest you want to create. The resulting manifest files have specific names, such as the standard package.xml or destruc…  
+
+                                         package :  package.xml (default)
+                                         pre : destructiveChangesPre.xml
+                                         post : destructiveChangesPost.xml
+                                         destroy : destructiveChanges.xml
+
+                                       See https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_deploy_deleting_files.htm for information about these destructive manifest files.    
+
+                                       Use --manifestname to specify a custom name for the generated manifest if the pre-defined ones don’t suit your needs. You can specify either --manifesttype or --man…  
+
+ force:source:open                     edit a Lightning Page with Lightning App Builder
+                                       Opens the specified Lightning Page in Lightning App Builder. Lightning Page files have the suffix .flexipage-meta.xml, and are stored in the flexipages directory. I…  
+
+                                       The file opens in your default browser.
+                                       If no browser-based editor is available for the selected file, this command opens your org's home page.
+                                       To generate a URL for the browser-based editor but not open the editor, use --urlonly.
+ force:source:pull                     pull source from the scratch org to the project
+
+                                       NOTE: This command must be run from within a project.
+
+                                       If the command detects a conflict, it displays the conflicts but does not complete the process. After reviewing the conflict, rerun the command with the --forceover…  
+ force:source:push                     push source to a scratch org from the project
+
+                                       NOTE: This command must be run from within a project.
+
+                                       If the command detects a conflict, it displays the conflicts but does not complete the process. After reviewing the conflict, rerun the command with the --forceover…  
+ force:source:retrieve                 retrieve source from an org
+                                       Use this command to retrieve source (metadata that’s in source format) from an org.
+                                       To take advantage of change tracking with scratch orgs, use "sfdx force:source:pull".
+                                       To retrieve metadata that’s in metadata format, use "sfdx force:mdapi:retrieve".
+
+                                       The source you retrieve overwrites the corresponding source files in your local project. This command does not attempt to merge the source from your org with your l…  
+
+                                       If the comma-separated list you’re supplying contains spaces, enclose the entire comma-separated list in one set of double quotes. On Windows, if the list contains …  
+ force:source:status                   list local changes and/or changes in a scratch org
+
+                                       NOTE: This command must be run from within a project.
+
+                                       Examples:
+                                          $ sfdx force:source:status -l
+                                          $ sfdx force:source:status -r
+                                          $ sfdx force:source:status -a
+                                          $ sfdx force:source:status -a -u me@example.com --json
+ force:source:tracking:clear           clear all local source tracking information
+
+                                       WARNING: This command deletes or overwrites all existing source tracking files. Use with extreme caution.
+
+                                       Clears all local source tracking information. When you next run force:source:status, the CLI displays all local and remote files as changed, and any files with the …  
+ force:source:tracking:reset           reset local and remote source tracking
+
+                                       WARNING: This command deletes or overwrites all existing source tracking files. Use with extreme caution.
+
+                                       Resets local and remote source tracking so that the CLI no longer registers differences between your local files and those in the org. When you next run force:sourc…  
+
+                                       Use the --revision parameter to reset source tracking to a specific revision number of an org source member. To get the revision number, query the SourceMember Tool…  
+                                         $ sfdx force:data:soql:query -q "SELECT MemberName, MemberType, RevisionCounter FROM SourceMember" -t
+ force:staticresource:create           create a static resource
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+
+ force:user:create                     create a user for a scratch org
+                                       Create a user for a scratch org, optionally setting an alias for use by the CLI, assigning permission sets (e.g., permsets=ps1,ps2), generating a password (e.g., ge…  
+ force:user:display                    displays information about a user of a scratch org
+                                       Output includes the profile name, org ID, access token, instance URL, login URL, and alias if applicable.
+ force:user:list                       list all authenticated users of an org
+                                       The original scratch org admin is marked with "(A)"
+ force:user:password:generate          generate a password for scratch org users
+                                       Generates and sets a random password for one or more scratch org users. Targets the usernames listed with the --onbehalfof parameter or the --targetusername paramet…  
+
+                                       If you haven’t set a default Dev Hub, or if your scratch org isn’t associated with your default Dev Hub, --targetdevhubusername is required.
+
+                                       To change the password strength, set the --complexity parameter to a value between 0 and 5. Each value specifies the types of characters used in the generated passw…  
+
+                                       0 - lower case letters only
+                                       1 - lower case letters and numbers only
+                                       2 - lower case letters and symbols only
+                                       3 - lower and upper case letters and numbers only
+                                       4 - lower and upper case letters and symbols only
+                                       5 - lower and upper case letters and numbers and symbols only
+
+                                       To see a password that was previously generated, run "sfdx force:user:display".
+ force:user:permset:assign             assign a permission set to one or more users of an org
+                                       To specify an alias for the -u or -o parameter, use the username alias you set with the "alias:set" CLI command, not the User.Alias value of the org user.
+ force:user:permsetlicense:assign      assign a permission set license to one or more users of an org
+ force:visualforce:component:create    create a Visualforce component
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+
+ force:visualforce:page:create         create a Visualforce page
+                                       If not supplied, the apiversion, template, and outputdir use default values.
+                                       The outputdir can be an absolute path or relative to the current working directory.
+
+ help                                  display help for sfdx
+ info:releasenotes:display             Display Salesforce CLI release notes on the command line.
+ plugins                               list installed plugins
+ plugins:generate                      create a new sfdx-cli plugin
+ plugins:inspect                       displays installation properties of a plugin
+ plugins:install                       installs a plugin into the CLI
+                                       Can be installed from npm or a git url.
+
+                                       Installation of a user-installed plugin will override a core plugin.
+
+                                       e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command will override the core plugin implementation. T…
+
+ plugins:link                          links a plugin into the CLI for development
+                                       Installation of a linked plugin will override a user-installed or core plugin.
+
+                                       e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello' command will override the user-installed or c…
+
+ plugins:trust:verify                  validate a digital signature for a npm package
+ plugins:uninstall                     removes a plugin from the CLI
+ plugins:update                        update installed plugins
+ update                                update the sfdx CLI
+ which                                 show which plugin a command is in
