@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "SFDX: Retrieve Metadata From Package",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:retrieve",
+                "-n",
+                "${input:packagename}"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "packagename",
+            "description": "Enter Package Name:",
+            "type": "promptString"
+        },
+    ]
+}
