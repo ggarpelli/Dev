@@ -6,9 +6,11 @@
             "type": "shell",
             "command": "sfdx",
             "args": [
-                "force:source:retrieve",
-                "-n",
+                "force:source:retrieve", "-f",
+                "-p",
                 "${input:packagename}"
+                "--retrievetargetdir",
+                "${input:packagename2}"
             ],
             "group": "build",
             "presentation": {
@@ -22,6 +24,11 @@
         {
             "id": "packagename",
             "description": "Enter Package Name:",
+            "type": "promptString"
+        },
+        {
+            "id": "packagename2",
+            "description": "Enter Diretorio Name:",
             "type": "promptString"
         },
     ]
