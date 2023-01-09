@@ -13,6 +13,7 @@ public with sharing class CaseResolutionAvgController {
             if(! accountTotalCaseMap.containsKey(caseObj.AccountId)){
                 accountTotalCaseMap.put(caseObj.AccountId, 0);
                 accountTotalCaseDaysMap.put(caseObj.AccountId, 0);
+                //Agora alterando o CaseResolution
             }
     
             // increase number of cases
