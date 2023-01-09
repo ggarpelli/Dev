@@ -10,6 +10,7 @@ public class AccountController {
     }
     public Static List<Account> getAllAccounts(){
         List<Account> contas = [SELECT Name, Phone FROM Account];
+        //primeiro Commit
         return contas;
     }
     
